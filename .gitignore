@@ -1,5 +1,9 @@
 *.exe
 arreglos
 arreglo_fuera_limite
-
+primer_str
+string_compare
+string_copy
+string_lengths
+string_nonlimited_array
 
