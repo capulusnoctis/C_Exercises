@@ -42,5 +42,7 @@ int main(int argc, const char * argv[]){
 		printf("%s\t\t%s\n", list[i].name, list[i].email);
 	}
 
+	free( list );
+
 	return 0;
 }
