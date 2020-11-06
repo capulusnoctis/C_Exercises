@@ -13,3 +13,4 @@ struct
 mylib_usage
 contact_list
 leak
+linked_list
