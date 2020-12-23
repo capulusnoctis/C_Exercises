@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <sys/sockets.h>
+#include <stdlib.h>
+#include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
@@ -7,7 +8,7 @@
 int main (int argc, const char * argv[]) {
 
 	if (argc > 2) {
-		char * ip;
+		const char * ip;
 		int client_socket, numbytes, puerto;
 		char buff[100];
 		puerto = atoi( argv[2] );
@@ -16,14 +17,14 @@ int main (int argc, const char * argv[]) {
 		struct sockaddr_in server;
 
 		if ( inet_pton(AF_INET, argv[1], &server.sin_addr) <= 0 ) {
-			perror("La ip %s no es valida", ip);
+			printf("La ip %s no es valida", ip);
 
 			return -1;
 		}
 		printf("Abriendo el socket\n");
 
 		if ( ( client_socket = socket( AF_INET, SOCK_STREAM, 0 ) ) == -1 ) {
-			perror("No pude abrir socket\n");
+			printf("No pude abrir socket\n");
 
 			return -2;
 		}
@@ -32,10 +33,10 @@ int main (int argc, const char * argv[]) {
 		server.sin_port = htons( puerto );
 		bzero( &(server.sin_zero), 8 );
 
-		printf("Conectando a %s:%d", argv[1], argv[2]);
+		printf("Conectando a %s:%d", argv[1], atoi(argv[2]));
 
 		if ( connect( client_socket, (struct sockaddr *)&server, sizeof(struct sockaddr) ) == -1 ) {
-			perror("No se pudo conectar al servidor\n");
+			printf("No se pudo conectar al servidor\n");
 
 			return -3;
 		}
@@ -54,7 +55,7 @@ int main (int argc, const char * argv[]) {
 
 		shutdown(client_socket, 2);
 	} else {
-		printf("Por favor, indique puerto!\n");
+		printf("Por favor, indique ip del servidor y el puerto!\n");
 
 		return -5;
 	}
